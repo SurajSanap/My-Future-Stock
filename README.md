@@ -3,6 +3,9 @@
 ## Overview
 This project aims to predict stock prices using machine learning techniques and provide actionable insights for investors and financial analysts. It utilizes historical stock data to build and evaluate predictive models, helping users make informed decisions in the stock market.
 
+![image](https://github.com/user-attachments/assets/898cb037-54e8-4009-97fe-c987ff18fe3b)
+
+
 ## Features
 - **Data Collection**: Fetches historical stock data using Quandl API.
 - **Data Preprocessing**: Cleans and preprocesses data to handle missing values and outliers.
