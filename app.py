@@ -1,41 +1,16 @@
 from flask import Flask, request, jsonify, render_template
 import pickle
 import numpy as np
-import pandas as pd
 
 app = Flask(__name__)
 
-# Load the models
-with open('knn_classification_model.pkl', 'rb') as f:
-    knn_classification_model = pickle.load(f)
-
-with open('knn_regression_model.pkl', 'rb') as f:
-    knn_regression_model = pickle.load(f)
+# Load the trained models
+knn_classification_model = pickle.load(open('knn_classification_model.pkl', 'rb'))
+knn_regression_model = pickle.load(open('knn_regression_model.pkl', 'rb'))
 
 @app.route('/')
 def home():
     return render_template('index.html')
-
-@app.route('/predict', methods=['POST'])
-def predict():
-    data = request.get_json()
-
-    # Convert input values to float
-    try:
-        open_close = float(data['Open - Close'])
-        high_low = float(data['High - Low'])
-    except ValueError as e:
-        return jsonify({"error": "Invalid input data"}), 400
-    
-    features = np.array([[open_close, high_low]])
-    
-    classification_prediction = knn_classification_model.predict(features)
-    regression_prediction = knn_regression_model.predict(features)
-    
-    return jsonify({
-        'Should Buy Stock': 'Yes' if classification_prediction[0] == 1 else 'No',
-        'Predicted Stock Price': f'{regression_prediction[0]:.2f}'
-    })
 
 @app.route('/about')
 def about():
@@ -45,5 +20,22 @@ def about():
 def contact():
     return render_template('contact.html')
 
-if __name__ == '__main__':
+@app.route('/predict', methods=['POST'])
+def predict():
+    try:
+        open_close = float(request.form['open_close'])
+        high_low = float(request.form['high_low'])
+        
+        features = np.array([[open_close, high_low]])
+        
+        classification_prediction = knn_classification_model.predict(features)
+        regression_prediction = knn_regression_model.predict(features)
+        
+        return render_template('index.html', 
+                               classification_result=classification_prediction[0], 
+                               regression_result=regression_prediction[0])
+    except Exception as e:
+        return str(e)
+
+if __name__ == "__main__":
     app.run(debug=True)
