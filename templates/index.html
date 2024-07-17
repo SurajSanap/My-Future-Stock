@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    
+    <title>Stock Price Prediction</title>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <h1>Stock Price Prediction</h1>
+        <form id="predict-form">
+            <div class="form-group">
+                <label for="open-close">Difference between Open and Close Price:</label>
+                <input type="text" id="open-close" name="open-close" placeholder="e.g., 5.32">
+            </div>
+            <div class="form-group">
+                <label for="high-low">Difference between High and Low Price:</label>
+                <input type="text" id="high-low" name="high-low" placeholder="e.g., 2.47">
+            </div>
+            <button type="submit">Predict</button>
+        </form>
+
+        <div id="result" class="result-box"></div>
+    </div>
+
+    <footer>
+        <p>© Suraj Sanap 2024</p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#predict-form').on('submit', function(e) {
+                e.preventDefault();
+
+                const openClose = $('#open-close').val();
+                const highLow = $('#high-low').val();
+
+                $.ajax({
+                    url: '/predict',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        'Open - Close': openClose,
+                        'High - Low': highLow
+                    }),
+                    success: function(response) {
+                        $('#result').html(`
+                            <p><strong>Recommendation:</strong> ${response['Should Buy Stock']}</p>
+                            <p><strong>Predicted Stock Price:</strong> ${response['Predicted Stock Price']}</p>
+                        `);
+                    },
+                    error: function(response) {
+                        $('#result').html(`<p>Error: ${response.responseJSON.error}</p>`);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

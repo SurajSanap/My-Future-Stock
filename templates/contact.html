@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>Contact</title>
+    <style>
+        .contact-buttons {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .contact-buttons a {
+            display: inline-block;
+            margin: 0 10px;
+        }
+        .contact-buttons img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+        .contact-buttons img:hover {
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <h1>Contact</h1>
+        <p>Contact information:</p>
+        <ul>
+            <li>Email: surajsanapcontact@gmail.com</li>
+            
+        </ul>
+
+        <div class="contact-buttons",>
+            <a href="https://github.com/SurajSanap" target="_blank">
+                <img src="{{ url_for('static', filename='images/gitlogo.png') }}" alt="GitHub">
+            </a>
+            <a href="https://www.linkedin.com/in/surajsanap01" target="_blank">
+                <img src="{{ url_for('static', filename='images/linkedinlogo.png') }}" alt="LinkedIn">
+            </a>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2024 Stock Price Prediction</p>
+    </footer>
+</body>
+</html>
