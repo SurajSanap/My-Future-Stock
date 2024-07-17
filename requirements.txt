@@ -5,3 +5,4 @@ seaborn
 quandl
 scikit-learn
 Flask
+gunicorn
