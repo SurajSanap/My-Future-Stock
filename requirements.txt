@@ -1,7 +1,7 @@
-pandas==2.0.3
-numpy==1.25.0
-matplotlib==3.7.2
-seaborn==0.12.2
-quandl==3.7.0
-scikit-learn==1.2.2
-Flask==2.3.2
+pandas
+numpy
+matplotlib
+seaborn
+quandl
+scikit-learn
+Flask
